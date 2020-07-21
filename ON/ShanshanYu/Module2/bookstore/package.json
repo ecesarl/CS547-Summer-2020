@@ -24,8 +24,7 @@
     "axios": "^0.18.0",
     "chance": "^1.0.18",
     "fs": "0.0.1-security",
-    "mustache": "^3.0.1",
-    "package.json": "^2.0.1"
+    "mustache": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
