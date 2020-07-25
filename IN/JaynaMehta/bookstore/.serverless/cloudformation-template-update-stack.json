@@ -146,7 +146,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aws-nodejs/dev/1595527797871-2020-07-23T18:09:57.871Z/aws-nodejs.zip"
+          "S3Key": "serverless/aws-nodejs/dev/1595718092577-2020-07-25T23:01:32.577Z/aws-nodejs.zip"
         },
         "FunctionName": "aws-nodejs-dev-get-index",
         "Handler": "functions/get-index.handler",
@@ -164,14 +164,14 @@
         "GetDashindexLogGroup"
       ]
     },
-    "GetDashindexLambdaVersions1EOOWoORESLTID1rD6bsHKvaJ2C8JJSvT9Ani44": {
+    "GetDashindexLambdaVersioni0SDeUyPBQC12n3An0h5GUShMocpSdYnmnMAKSrUR48": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetDashindexLambdaFunction"
         },
-        "CodeSha256": "WERiYA3AXjbzatDVDWwaQ7WQsOqkuw0LCpi2oHgS+bc="
+        "CodeSha256": "Ptkk8t7DrBEhKa/nvFfca8up4Uv0pDHaPsGjVoTB128="
       }
     },
     "ApiGatewayRestApi": {
@@ -232,7 +232,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1595527772033": {
+    "ApiGatewayDeployment1595718062033": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -291,7 +291,7 @@
     "GetDashindexLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetDashindexLambdaVersions1EOOWoORESLTID1rD6bsHKvaJ2C8JJSvT9Ani44"
+        "Ref": "GetDashindexLambdaVersioni0SDeUyPBQC12n3An0h5GUShMocpSdYnmnMAKSrUR48"
       }
     },
     "ServiceEndpoint": {
