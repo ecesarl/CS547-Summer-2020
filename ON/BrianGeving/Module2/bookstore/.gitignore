@@ -1,5 +1,6 @@
-# exclude node_module push
-node_module/
+# package directories
+node_modules
+jspm_packages
 
-# exclude package-lock.json
-package-lock.json
+# Serverless directories
+.serverless
