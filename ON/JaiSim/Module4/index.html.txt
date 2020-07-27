@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Serverless dome</title>
+
+
+
+    <style>
+
+        .container {
+
+            margin: 0 auto;
+
+            width: 90%;
+
+        }
+
+
+
+        .imgDiv {
+
+            width: 100%;
+
+        }
+
+
+
+        .imgDiv img {
+
+            width: 100%;
+
+        }
+
+
+
+        .searchDiv {
+
+            width: 100%;
+
+            text-align: center;
+
+            margin: 20px auto;
+
+        }
+
+
+
+        .booksDiv {
+
+            display: flex;
+
+            width: 100%;
+
+            justify-content: space-evenly;
+
+            flex-wrap: wrap;
+
+        }
+
+    </style>
+
+
+
+</head>
+
+
+
+<body>
+
+    <div class="container">
