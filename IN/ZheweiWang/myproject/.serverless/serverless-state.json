@@ -160,7 +160,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/aws-nodejs/dev/1595833470349-2020-07-27T07:04:30.349Z/aws-nodejs.zip"
+                "S3Key": "serverless/aws-nodejs/dev/1595834249145-2020-07-27T07:17:29.145Z/aws-nodejs.zip"
               },
               "FunctionName": "aws-nodejs-dev-get-index",
               "Handler": "functions/get-index.handler",
@@ -246,7 +246,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1595833447019": {
+          "ApiGatewayDeployment1595834226220": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -433,7 +433,7 @@
     "artifact": "D:\\GitHub\\CS547-Summer-2020\\IN\\ZheweiWang\\myproject\\.serverless\\aws-nodejs.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/aws-nodejs/dev/1595833470349-2020-07-27T07:04:30.349Z",
+    "artifactDirectoryName": "serverless/aws-nodejs/dev/1595834249145-2020-07-27T07:17:29.145Z",
     "artifact": "aws-nodejs.zip"
   }
 }
