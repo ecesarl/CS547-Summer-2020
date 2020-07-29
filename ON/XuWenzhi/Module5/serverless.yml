@@ -7,6 +7,10 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: us-west-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action: dynamodb:scan
+      Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/books
 functions:
   get-index:
     handler: functions/get-index.handler
@@ -15,8 +19,16 @@ functions:
           path: /
           method: get
     environment:
+      fetch_books_api: https://tmnxoramid.execute-api.us-west-2.amazonaws.com/dev/books
       search_books_api: https://tmnxoramid.execute-api.us-west-2.amazonaws.com/dev/books/search
-
+  fetch-books:
+    handler: functions/fetch-books.handler
+    events:
+      - http:
+          path: /books/
+          method: get
+    environment:
+      books_table: books
   search-books:
     handler: functions/search-books.handler
     events:
@@ -25,3 +37,19 @@ functions:
           method: post
     environment:
       books_table: books
+
+resources:
+  Resources:
+    libraryTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: books
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
