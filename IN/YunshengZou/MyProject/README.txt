@@ -1,0 +1,1 @@
+This Myproject folder is including the hands-on-practice's content since Module 2.
