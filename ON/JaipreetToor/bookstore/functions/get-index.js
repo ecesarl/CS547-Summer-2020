@@ -1,4 +1,4 @@
-use strict';
+'use strict';
 
 const fs = require('fs'); // Require the fs library to read files
 
