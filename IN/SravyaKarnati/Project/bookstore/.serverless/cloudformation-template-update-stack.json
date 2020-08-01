@@ -146,7 +146,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/bookstore/dev/1595572238160-2020-07-24T06:30:38.160Z/bookstore.zip"
+          "S3Key": "serverless/bookstore/dev/1596321680606-2020-08-01T22:41:20.606Z/bookstore.zip"
         },
         "FunctionName": "bookstore-dev-get-index",
         "Handler": "functions/get-index.handler",
@@ -164,14 +164,14 @@
         "GetDashindexLogGroup"
       ]
     },
-    "GetDashindexLambdaVersionHnsIQkO5lc4fwiU9MPLMV8kUauGvXYHPYwCSgrsmt8": {
+    "GetDashindexLambdaVersione2EitFeT2NjVVGVwUZjUjmTrSpycuBnJDDSei2LKKU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetDashindexLambdaFunction"
         },
-        "CodeSha256": "Wh16R4Op2+UNqtMzWYXhGYM3a38or1WIAFChxcbcg7U="
+        "CodeSha256": "46nGk/tylLowkPYkAkOpwxyXNsKcAZmj6uYq35GiPo4="
       }
     },
     "ApiGatewayRestApi": {
@@ -232,7 +232,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1595572211743": {
+    "ApiGatewayDeployment1596321654023": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -291,7 +291,7 @@
     "GetDashindexLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetDashindexLambdaVersionHnsIQkO5lc4fwiU9MPLMV8kUauGvXYHPYwCSgrsmt8"
+        "Ref": "GetDashindexLambdaVersione2EitFeT2NjVVGVwUZjUjmTrSpycuBnJDDSei2LKKU"
       }
     },
     "ServiceEndpoint": {
