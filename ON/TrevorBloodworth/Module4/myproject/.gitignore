@@ -1,5 +1,5 @@
 # exclude node_module to be push to GitHub
-node_module/
+node_modules/
 
 # exclude package-lock.json
 packalge-lock.json
