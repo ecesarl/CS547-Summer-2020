@@ -160,7 +160,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/aws-nodejs/dev/1595834249145-2020-07-27T07:17:29.145Z/aws-nodejs.zip"
+                "S3Key": "serverless/aws-nodejs/dev/1596438917949-2020-08-03T07:15:17.949Z/aws-nodejs.zip"
               },
               "FunctionName": "aws-nodejs-dev-get-index",
               "Handler": "functions/get-index.handler",
@@ -178,14 +178,14 @@
               "GetDashindexLogGroup"
             ]
           },
-          "GetDashindexLambdaVersionHN4uGOk0iA59wm6OEUuH0zIaCZ9txTEEO4mq9GgxnjE": {
+          "GetDashindexLambdaVersionIDA31s644y86x6X6q8zT6xukfL0Nbcxz06piDcJ1Q": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDashindexLambdaFunction"
               },
-              "CodeSha256": "CfeKTnqWI7FOnlWv2hcfNG23LaDOSd6BQ9zaCEqLB10="
+              "CodeSha256": "km08X6ozD4wqiLBo0YKzceLvFWSzcyiM8Eed9BuC6wE="
             }
           },
           "ApiGatewayRestApi": {
@@ -246,7 +246,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1595834226220": {
+          "ApiGatewayDeployment1596438893353": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -305,7 +305,7 @@
           "GetDashindexLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDashindexLambdaVersionHN4uGOk0iA59wm6OEUuH0zIaCZ9txTEEO4mq9GgxnjE"
+              "Ref": "GetDashindexLambdaVersionIDA31s644y86x6X6q8zT6xukfL0Nbcxz06piDcJ1Q"
             }
           },
           "ServiceEndpoint": {
@@ -424,7 +424,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "GetDashindexLambdaVersionHN4uGOk0iA59wm6OEUuH0zIaCZ9txTEEO4mq9GgxnjE"
+        "versionLogicalId": "GetDashindexLambdaVersionIDA31s644y86x6X6q8zT6xukfL0Nbcxz06piDcJ1Q"
       }
     },
     "serviceFilename": "serverless.yml",
@@ -433,7 +433,7 @@
     "artifact": "D:\\GitHub\\CS547-Summer-2020\\IN\\ZheweiWang\\myproject\\.serverless\\aws-nodejs.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/aws-nodejs/dev/1595834249145-2020-07-27T07:17:29.145Z",
+    "artifactDirectoryName": "serverless/aws-nodejs/dev/1596438917949-2020-08-03T07:15:17.949Z",
     "artifact": "aws-nodejs.zip"
   }
 }
