@@ -20,8 +20,9 @@ functions:
           path: /
           method: get
     envionrment:
-      fetch_books_api: https://olp96slh59.execute-api.us-west-2.amazonaws.com/dev/
-                       https://olp96slh59.execute-api.us-west-2.amazonaws.com/dev/books
+      fetch_books_api:  https://olp96slh59.execute-api.us-west-2.amazonaws.com/dev/
+                        https://olp96slh59.execute-api.us-west-2.amazonaws.com/dev/books
+      search_books_api: https://olp96slh59.execute-api.us-west-2.amazonaws.com/dev/books/search
 
   fetch-books:
     handler: functions/fetch-books.handler
@@ -32,6 +33,14 @@ functions:
     environment:
       books_table: books
 
+  search-books:
+    handler: functions/search-books.handler
+    events:
+      - http:
+          path: /books/search
+          method: post
+    environment:
+      books_table: books     
 resources:
   Resources:
     libraryTable:
