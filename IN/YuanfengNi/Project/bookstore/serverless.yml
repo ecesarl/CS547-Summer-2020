@@ -11,6 +11,7 @@ provider:
     - Effect: Allow
       Action: dynamodb:scan
       Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/books
+
 functions:
   get-index:
     handler: functions/get-index.handler
@@ -20,13 +21,22 @@ functions:
           method: get
     environment:
       fetch-books_api: https://c497qmy6xj.execute-api.us-west-2.amazonaws.com/dev/books
-
+      search_book_api: https://c497qmy6xj.execute-api.us-west-2.amazonaws.com/dev/books/search
   fetch-books:
     handler: functions/fetch-books.handler
     events:
       - http:
           path: /books/
           method: get
+    environment:
+      books_table: books
+  
+  search-books:
+    handler: functions/search-books.handler
+    events:
+      - http:
+          path: /books/search
+          method: post
     environment:
       books_table: books
 
