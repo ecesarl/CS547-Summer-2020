@@ -1,109 +1,107 @@
-const AWS = require('aws-sdk');
-require('dotenv').config();
+<!DOCTYPE html>
+<html lang="en">
 
-AWS.config.update({
-  region: 'us-west-2',
-  accessKeyId: process.env.accessKeyId,
-  secretAccessKey: process.env.secretAccessKey,
-});
-// Create DynamoDB service object
-const ddb = new AWS.DynamoDB({ apiVersion: '2018-11-26' });
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store</title>
 
-const params = {
-  RequestItems: {
-    books: [
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Data Wrangling with JavaScript' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544422702/others/Data-Wrangling-with-JavaScript.jpg' },
-            topics: { SS: ['javascript', 'data'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Amazon Web Services in Action, 2nd Edition' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544422795/others/Amazon-Web-Services-in-Action-2nd-Edition.jpg' },
-            topics: { SS: ['AWS', 'Cloud'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Scaling Your Node.js Apps' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544422878/others/Scaling-Your-Node.js-Apps.jpg' },
-            topics: { SS: ['javascript', 'node'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Data Analysis and Visualization Using Python' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544422943/others/Data-Analysis-and-Visualization-Using-Python.jpg' },
-            topics: { SS: ['data', 'python'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Think Like a Data Scientist' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544423012/others/Think-Like-a-Data-Scientist.jpg' },
-            topics: { SS: ['data'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'PHP, MySQL, JavaScript & HTML5 All-in-One For Dummies' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544423090/others/PHP-MySQL-JavaScript-HTML5-All-in-One-For-Dummies.jpg' },
-            topics: { SS: ['php', 'mysql', 'javascript', 'html'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Ruby Data Processing' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544423188/others/1484234731.jpg' },
-            topics: { SS: ['ruby', 'data'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Effective Java, 2nd Edition' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544423294/others/68554c5efe76419.jpg' },
-            topics: { SS: ['java'] },
-          },
-        },
-      },
-    ],
-  },
-};
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .container {
+            margin: 0 auto;
+            width: 90%;
+        }
 
-ddb.batchWriteItem(params, (err, data) => {
-  if (err) console.log(err);
-  else console.log('success', data);
-});
+        .imgDiv {
+            width: 100%;
+        }
 
-/* Add one item */
-// const paramsA = {
-//   TableName: 'books',
-//   Item: {
-//     name: { S: '' },
-//     image: { S: '' },
-//     themes: { SS: [] },
-//   },
-// };
+        .imgDiv img {
+            width: 100%;
+        }
 
-// ddb.putItem(paramsA, (err, data) => {
-//   if (err) console.log(err);
-//   else console.log(data);
-// });
+        .searchDiv {
+            width: 100%;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        .booksDiv {
+            display: flex;
+            width: 80%;
+            margin: auto;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .bookDiv {
+            margin: 20px;
+            width: 200px;
+        }
+
+        .bookDiv img {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="imgDiv"><img
+                src="https://res.cloudinary.com/orderstaker/image/upload/v1544419469/others/photo-1499864578991-7642d0f86e5c.jpg"
+                alt="The logo" /></div>
+    </div>
+
+    <div class="searchDiv">
+        <input id="searchInput" name="searchInput" type="text" /><button id="searchBtn"
+            onclick="onSearch()">Search</button>
+    </div>
+
+    <div class="booksDiv" id="booksDiv">
+        {{#books}}
+        <div class="bookDiv">
+            <div><img alt="book" src="{{image}}" /></div>
+            <div>{{name}}</div>
+        </div>
+        {{/books}}
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha384-Dziy8F2VlJQLMShA6FHWNul/veM9bCkRUaLqr199K94ntO5QUrLJBEbYegdSkkqX"
+    crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const SEARCH_API = '{{& searchAPI}}'; // From the get-index.js
+    const input = $('#searchInput');
+    const booksDiv = $('#booksDiv');
+    input.on('keyup', ({ keyCode }) => {
+        if (keyCode === 13) onSearch();
+    });
+
+    function onSearch() {
+        const keyword = input.val();
+        if (keyword.length !== 0) {
+            booksDiv.toggle('slide', { direction: 'down' });
+            const btn = $('#searchBtn');
+            btn.attr('disabled', 'disabled');
+            input.val('');
+            axios.post(SEARCH_API, { topic: keyword })
+                .then((response => {
+                    let content = '';
+                    response.data.Items.forEach(book => content += `<div class="bookDiv">
+                                                              <div><img alt="book" src="${book.image}" /></div>
+                                                              <div>${book.name}</div>
+                                                            </div>`);
+                    booksDiv.html(content);
+                    btn.removeAttr('disabled');
+                    booksDiv.toggle('slide', { direction: 'down' });
+                })).catch(err => console.log(err));
+        }
+    }
+</script>
+
+</html>
