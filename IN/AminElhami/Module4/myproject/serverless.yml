@@ -1,23 +1,46 @@
-'use strict';
+service: aws-nodejs # NOTE: update this with your service name
 
-const AWS = require('aws-sdk');
+plugins:
+  - serverless-pseudo-parameters
 
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const resultNumber = process.env.RESULT_NUMBER || 8;
-const tableName = process.env.books_table;
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-west-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action: dynamodb:scan
+      Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/books
 
-const fetchBooks = number => {
-  const req = {
-    TableName: tableName,
-    Limit: number,
-  };
-  return dynamodb.scan(req).promise();
-};
+functions:
+  get-index:
+    handler: functions/get-index.handler
+    events:
+      - http:
+          path: /
+          method: get
 
-module.exports.handler = async (event, context, callback) => {
-  const result = await fetchBooks(resultNumber);
-  callback(null, {
-    statusCode: 200,
-    body: JSON.stringify(result),
-  });
-};
+  fetch-books:
+    handler: functions/fetch-books.handler
+    events:
+      - http:
+          path: /books/
+          method: get
+    environment:
+      books_table: books
+
+resources:
+  Resources:
+    libraryTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: books
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
