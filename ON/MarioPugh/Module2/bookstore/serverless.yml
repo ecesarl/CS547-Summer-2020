@@ -19,6 +19,8 @@ functions:
       - http:
           path: /
           method: get
+          fetch_books_api: https://h6cdqdiqx5.execute-api.us-west-2.amazonaws.com/dev/books
+          search_books_api: https://h6cdqdiqx5.execute-api.us-west-2.amazonaws.com/dev/books/search
 
   fetch-books:
     handler: functions/fetch-books.handler
@@ -27,7 +29,17 @@ functions:
           path: /books/
           method: get
     environment:
-      books_table: https://h6cdqdiqx5.execute-api.us-west-2.amazonaws.com/dev/books
+      books_table: books
+
+  search-books:
+    handler: functions/search-books.handler
+    events:
+      - http:
+          path: /books/search
+          method: post
+    environment:
+      books_table: books
+
 
 resources:
   Resources:
