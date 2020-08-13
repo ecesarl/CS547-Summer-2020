@@ -29,6 +29,8 @@ functions:
       - http:
           path: /books/
           method: get
+          authorizer: aws_iam
+
     environment:
       books_table: books
 
