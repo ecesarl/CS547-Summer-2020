@@ -1,109 +1,81 @@
-const AWS = require('aws-sdk');
-require('dotenv').config();
+'use strict';
 
-AWS.config.update({
-  region: 'us-west-2',
-  accessKeyId: process.env.accessKeyId,
-  secretAccessKey: process.env.secretAccessKey,
-});
-// Create DynamoDB service object
-const ddb = new AWS.DynamoDB({ apiVersion: '2018-11-26' });
+// Require the fs library to read files
+const fs = require('fs');
+// Template library.
+const Mustache = require('mustache'); // Template library.
+const axios = require('axios');
+const aws4 = require('aws4');
+const awscred = require('awscred');
+const URL = require('url'); // Come from node.js module
 
-const params = {
-  RequestItems: {
-    books: [
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Data Wrangling with JavaScript' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544422702/others/Data-Wrangling-with-JavaScript.jpg' },
-            topics: { SS: ['javascript', 'data'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Amazon Web Services in Action, 2nd Edition' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544422795/others/Amazon-Web-Services-in-Action-2nd-Edition.jpg' },
-            topics: { SS: ['AWS', 'Cloud'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Scaling Your Node.js Apps' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544422878/others/Scaling-Your-Node.js-Apps.jpg' },
-            topics: { SS: ['javascript', 'node'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Data Analysis and Visualization Using Python' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544422943/others/Data-Analysis-and-Visualization-Using-Python.jpg' },
-            topics: { SS: ['data', 'python'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Think Like a Data Scientist' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544423012/others/Think-Like-a-Data-Scientist.jpg' },
-            topics: { SS: ['data'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'PHP, MySQL, JavaScript & HTML5 All-in-One For Dummies' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544423090/others/PHP-MySQL-JavaScript-HTML5-All-in-One-For-Dummies.jpg' },
-            topics: { SS: ['php', 'mysql', 'javascript', 'html'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Ruby Data Processing' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544423188/others/1484234731.jpg' },
-            topics: { SS: ['ruby', 'data'] },
-          },
-        },
-      },
-      {
-        PutRequest: {
-          Item: {
-            name: { S: 'Effective Java, 2nd Edition' },
-            image: { S: 'https://res.cloudinary.com/orderstaker/image/upload/v1544423294/others/68554c5efe76419.jpg' },
-            topics: { SS: ['java'] },
-          },
-        },
-      },
-    ],
-  },
+// Set a variable outside of function in order to reuse
+var html;
+// The function that will read content from our html file
+const getHtml = () => {
+    if (html) return html; // If the content has existed, do not read it again
+    // Return a promise
+    return new Promise((resolve, reject) => {
+        fs.readFile('static/index.html', 'utf8', (err, data) => {
+            if (err) reject(err);
+            html = data;
+            resolve(html);
+        });
+    });
 };
 
-ddb.batchWriteItem(params, (err, data) => {
-  if (err) console.log(err);
-  else console.log('success', data);
-});
+const fetchBooks = async () => {
+  // Use AWS4 to sign the request
+  const url = URL.parse(process.env.fetch_books_api);
+  const opts = {
+    host: url.hostname,
+    path: url.pathname,
+  };
 
-/* Add one item */
-// const paramsA = {
-//   TableName: 'books',
-//   Item: {
-//     name: { S: '' },
-//     image: { S: '' },
-//     themes: { SS: [] },
-//   },
-// };
+  // TODO: will be move to a helper function for reusing.
+  // // User the awscred library to load credantial keys from the local profile.
+  if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) await new Promise((resolve, reject) => {
+    awscred.loadCredentials((err, data) => {
+      if (err) reject(err);
+      process.env.AWS_ACCESS_KEY_ID = data.accessKeyId;
+      process.env.AWS_SECRET_ACCESS_KEY = data.secretAccessKey;
+      // This is for the CodePipeline.
+      // When we run the code there, a temporary IAM role will be used. So we have to add it as the session token.
+      if (data.sessionToken) process.env.AWS_SESSION_TOKEN = data.sessionToken;
+      resolve();
+    });
+  });
 
-// ddb.putItem(paramsA, (err, data) => {
-//   if (err) console.log(err);
-//   else console.log(data);
-// });
+  aws4.sign(opts);
+
+  const headers = {
+    Host: opts.headers.Host,
+    'X-Amz-Date': opts.headers['X-Amz-Date'],
+    Authorization: opts.headers.Authorization,
+    'X-Amz-Security-Token': opts.headers['X-Amz-Security-Token'],
+  };
+  // If 'X-Amz-Security-Token' does not exsit, delete it for the local test.
+  if (!headers['X-Amz-Security-Token']) delete headers['X-Amz-Security-Token'];
+
+  return axios.get(process.env.fetch_books_api, {
+    headers,
+  });
+};
+
+module.exports.handler = async (event, context, callback) => {
+  const htmlcontent = await getHtml();
+  const books = await fetchBooks();
+
+  const returnHtml = Mustache.render(htmlcontent, {
+    books: books.data.Items,
+    searchAPI: process.env.search_books_api,
+  });
+  const response = {
+    statusCode: 200,
+    headers: {
+      'Content-Type': 'text/html; charset=UTF-8',
+    },
+    body: returnHtml,
+  };
+  callback(null, response);
+};
