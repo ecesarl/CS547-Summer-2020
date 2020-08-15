@@ -7,6 +7,7 @@
     <title>Book Store</title>
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .container {
             margin: 0 auto;
@@ -15,6 +16,7 @@
 
         .imgDiv {
             width: 100%;
+            height: 200px;
         }
 
         .imgDiv img {
@@ -23,6 +25,7 @@
 
         .searchDiv {
             width: 100%;
+            height: 50px;
             text-align: center;
             margin: 20px auto;
         }
@@ -50,13 +53,14 @@
 <body>
     <div class="container">
         <div class="imgDiv"><img
-                src="https://res.cloudinary.com/orderstaker/image/upload/v1544419469/others/photo-1499864578991-7642d0f86e5c.jpg"
-                alt="The logo" /></div>
+                src="https://live.staticflickr.com/3713/10356387255_92f72f9e42_b.jpg"
+                alt="The logo"
+                style="width:100%; height:270px" /></div>
     </div>
 
     <div class="searchDiv">
-        <input id="searchInput" name="searchInput" type="text" /><button id="searchBtn"
-            onclick="onSearch()">Search</button>
+        <input id="searchInput" name="searchInput" type="text" placeholder="Seach favourite books..."/><button id="searchBtn"
+            onclick="onSearch()"><i class="fa fa-search"></i></button>
     </div>
 
     <div class="booksDiv" id="booksDiv">
