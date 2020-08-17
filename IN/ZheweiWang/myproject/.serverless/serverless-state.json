@@ -17,6 +17,13 @@
           "Resource": {
             "Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/books"
           }
+        },
+        {
+          "Effect": "Allow",
+          "Action": "execute-api:Invoke",
+          "Resource": {
+            "Fn::Sub": "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*/GET/books"
+          }
         }
       ],
       "versionFunctions": true,
@@ -156,6 +163,9 @@
                       },
                       {
                         "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][1]"
                       }
                     ]
                   }
@@ -184,7 +194,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/aws-nodejs/dev/1597069464707-2020-08-10T14:24:24.707Z/aws-nodejs.zip"
+                "S3Key": "serverless/aws-nodejs/dev/1597650198360-2020-08-17T07:43:18.360Z/aws-nodejs.zip"
               },
               "FunctionName": "aws-nodejs-dev-get-index",
               "Handler": "functions/get-index.handler",
@@ -208,14 +218,14 @@
               "GetDashindexLogGroup"
             ]
           },
-          "GetDashindexLambdaVersion9XcmdAQMQVz4xQmTW7P4Yc31d5rtyOatilKyrWRk": {
+          "GetDashindexLambdaVersionVzU3uYXInp4a5NcH5WoKZ4QdbqO2Ft1HYwThElkDOVs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDashindexLambdaFunction"
               },
-              "CodeSha256": "PvaFta9zwNZFP8YduvBZt6W2wJFd7bATZryyIYaPs5w="
+              "CodeSha256": "u7BQyM41zLSvUT1M2xx8sM7MVJrplEO72fi3GOS9Gzs="
             }
           },
           "FetchDashbooksLambdaFunction": {
@@ -225,7 +235,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/aws-nodejs/dev/1597069464707-2020-08-10T14:24:24.707Z/aws-nodejs.zip"
+                "S3Key": "serverless/aws-nodejs/dev/1597650198360-2020-08-17T07:43:18.360Z/aws-nodejs.zip"
               },
               "FunctionName": "aws-nodejs-dev-fetch-books",
               "Handler": "functions/fetch-books.handler",
@@ -248,14 +258,14 @@
               "FetchDashbooksLogGroup"
             ]
           },
-          "FetchDashbooksLambdaVersionjvMqnY9aSEyoX6YKUN2xS54QtEawwRZSdwOBckNRE": {
+          "FetchDashbooksLambdaVersionpwwDhv4b37zk0cBCS8e7ZzNtVbCQv5P36DbDxhGR5U": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "FetchDashbooksLambdaFunction"
               },
-              "CodeSha256": "PvaFta9zwNZFP8YduvBZt6W2wJFd7bATZryyIYaPs5w="
+              "CodeSha256": "u7BQyM41zLSvUT1M2xx8sM7MVJrplEO72fi3GOS9Gzs="
             }
           },
           "SearchDashbooksLambdaFunction": {
@@ -265,7 +275,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/aws-nodejs/dev/1597069464707-2020-08-10T14:24:24.707Z/aws-nodejs.zip"
+                "S3Key": "serverless/aws-nodejs/dev/1597650198360-2020-08-17T07:43:18.360Z/aws-nodejs.zip"
               },
               "FunctionName": "aws-nodejs-dev-search-books",
               "Handler": "functions/search-books.handler",
@@ -288,14 +298,14 @@
               "SearchDashbooksLogGroup"
             ]
           },
-          "SearchDashbooksLambdaVersionmQIdW0HPP6iMzXOv30IuhaY78xNn0DIX6ntSZnv4": {
+          "SearchDashbooksLambdaVersionaKNaoeDIBV352GytZ47NP3z70MqaPWa3QHbBtD9c": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SearchDashbooksLambdaFunction"
               },
-              "CodeSha256": "PvaFta9zwNZFP8YduvBZt6W2wJFd7bATZryyIYaPs5w="
+              "CodeSha256": "u7BQyM41zLSvUT1M2xx8sM7MVJrplEO72fi3GOS9Gzs="
             }
           },
           "ApiGatewayRestApi": {
@@ -395,7 +405,7 @@
                 "Ref": "ApiGatewayRestApi"
               },
               "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
+              "AuthorizationType": "AWS_IAM",
               "Integration": {
                 "IntegrationHttpMethod": "POST",
                 "Type": "AWS_PROXY",
@@ -469,7 +479,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1597069439468": {
+          "ApiGatewayDeployment1597650173988": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -626,19 +636,19 @@
           "GetDashindexLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDashindexLambdaVersion9XcmdAQMQVz4xQmTW7P4Yc31d5rtyOatilKyrWRk"
+              "Ref": "GetDashindexLambdaVersionVzU3uYXInp4a5NcH5WoKZ4QdbqO2Ft1HYwThElkDOVs"
             }
           },
           "FetchDashbooksLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "FetchDashbooksLambdaVersionjvMqnY9aSEyoX6YKUN2xS54QtEawwRZSdwOBckNRE"
+              "Ref": "FetchDashbooksLambdaVersionpwwDhv4b37zk0cBCS8e7ZzNtVbCQv5P36DbDxhGR5U"
             }
           },
           "SearchDashbooksLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SearchDashbooksLambdaVersionmQIdW0HPP6iMzXOv30IuhaY78xNn0DIX6ntSZnv4"
+              "Ref": "SearchDashbooksLambdaVersionaKNaoeDIBV352GytZ47NP3z70MqaPWa3QHbBtD9c"
             }
           },
           "ServiceEndpoint": {
@@ -761,7 +771,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "GetDashindexLambdaVersion9XcmdAQMQVz4xQmTW7P4Yc31d5rtyOatilKyrWRk"
+        "versionLogicalId": "GetDashindexLambdaVersionVzU3uYXInp4a5NcH5WoKZ4QdbqO2Ft1HYwThElkDOVs"
       },
       "fetch-books": {
         "handler": "functions/fetch-books.handler",
@@ -770,6 +780,11 @@
             "http": {
               "path": "books",
               "method": "get",
+              "authorizer": {
+                "type": "AWS_IAM",
+                "managedExternally": false,
+                "identitySource": "method.request.header.Authorization"
+              },
               "integration": "AWS_PROXY"
             }
           }
@@ -783,7 +798,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "FetchDashbooksLambdaVersionjvMqnY9aSEyoX6YKUN2xS54QtEawwRZSdwOBckNRE"
+        "versionLogicalId": "FetchDashbooksLambdaVersionpwwDhv4b37zk0cBCS8e7ZzNtVbCQv5P36DbDxhGR5U"
       },
       "search-books": {
         "handler": "functions/search-books.handler",
@@ -805,7 +820,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "SearchDashbooksLambdaVersionmQIdW0HPP6iMzXOv30IuhaY78xNn0DIX6ntSZnv4"
+        "versionLogicalId": "SearchDashbooksLambdaVersionaKNaoeDIBV352GytZ47NP3z70MqaPWa3QHbBtD9c"
       }
     },
     "resources": {
@@ -841,7 +856,7 @@
     "artifact": "D:\\GitHub\\CS547-Summer-2020\\IN\\ZheweiWang\\myproject\\.serverless\\aws-nodejs.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/aws-nodejs/dev/1597069464707-2020-08-10T14:24:24.707Z",
+    "artifactDirectoryName": "serverless/aws-nodejs/dev/1597650198360-2020-08-17T07:43:18.360Z",
     "artifact": "aws-nodejs.zip"
   }
 }
