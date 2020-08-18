@@ -29,6 +29,15 @@ functions:
     environment:
       books_table: books
 
+  search-books:
+    handler: functions/search-books.handler
+    events:
+      - http:
+          path: /books/search
+          method: post
+    environment:
+      books_table: books
+
 resources:
   Resources:
     libraryTable:
